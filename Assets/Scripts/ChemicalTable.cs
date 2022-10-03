@@ -44,22 +44,53 @@ namespace Assets.Scripts
         public void InitializeTable()
         {
             var frogMilk = RegisterChemical("Frog Milk", 0b1, true, false);
-            var crystals = RegisterChemical("Crystals", 0b10, true, false);
-            var dragonBreath = RegisterChemical("Dragon Breath", 0b11, true, false);
-            var witchSpice = RegisterChemical("Witch Spice", 0b100, true, false);
-            var goop = RegisterChemical("Goop", 0b101, true, false);
+            var crystals = RegisterChemical("Pure Crystals", 0b10, true, false);
+            var magicLeaves = RegisterChemical("Magic Leaves", 0b11, true, false);
 
-            var royalGreenTea = RegisterChemical("Royal Green Tea",
+            var sweetTea = RegisterChemical("Sweet Tea",
+                new Chemical[] { crystals, magicLeaves });
+            var condensedMilk = RegisterChemical("Condensed Milk",
                 new Chemical[] { frogMilk, crystals });
-            var cinnamonTea = RegisterChemical("Cinnamon Tea",
-                new Chemical[] { frogMilk, dragonBreath });
-            var fireSpice = RegisterChemical("Fire Spice",
-                new Chemical[] { dragonBreath, witchSpice });
+            var slime = RegisterChemical("Slime",
+                new Chemical[] { frogMilk, magicLeaves });
+            var sweetPearls = RegisterChemical("Sweet Pearls",
+                new Chemical[] { crystals, crystals });
 
-            var heatedFrogTea = RegisterChemical("Heated Frog Tea",
-                new Chemical[] { fireSpice, frogMilk });
-            var spicedCinnamonTea = RegisterChemical("Spiced Cinnamon Tea",
-                new Chemical[] { witchSpice, cinnamonTea });
+            var goop = RegisterChemical("Goop",
+                new Chemical[] { condensedMilk, slime });
+            var soulCream = RegisterChemical("Soul Cream",
+                new Chemical[] { condensedMilk, sweetPearls });
+            var bubbly = RegisterChemical("Bubbly",
+                new Chemical[] { slime, sweetPearls });
+            var arnoldPalmer= RegisterChemical("Arnold Palmer",
+                new Chemical[] { sweetTea, slime });
+            var bobbaGreenTea = RegisterChemical("Boba Green Tea",
+                new Chemical[] { sweetPearls, sweetTea });
+
+            var syrup = RegisterChemical("Syrup",
+                new Chemical[] { goop, soulCream });
+            var creamSoda = RegisterChemical("Cream Soda",
+                new Chemical[] { soulCream, bubbly });
+            var caffeine = RegisterChemical("Caffeine",
+                new Chemical[] { bubbly, arnoldPalmer});
+            var bobaGoop = RegisterChemical("Boba Goop",
+                new Chemical[] { bobbaGreenTea, soulCream });
+
+            var caffeinatedSyrup = RegisterChemical("Caffeinated Syrup",
+                new Chemical[] { caffeine, syrup });
+            var creamSodaSyrup = RegisterChemical("Cream Soda Syrup",
+                new Chemical[] { syrup, creamSoda });
+            var magicGoop = RegisterChemical("Magic Goop",
+                new Chemical[] { bobaGoop, creamSoda });
+
+            var coffeeSyrup = RegisterChemical("Coffee Syrup",
+                new Chemical[] { caffeinatedSyrup, magicGoop });
+            var sodaCream = RegisterChemical("Soda Cream",
+                new Chemical[] { creamSodaSyrup, magicGoop });
+
+            var coffee = RegisterChemical("Coffee",
+                new Chemical[] { coffeeSyrup, sodaCream });
+
         }
         private BigInteger GetProduct(Chemical[] ingredients)
         {
@@ -105,6 +136,11 @@ namespace Assets.Scripts
             {
                 return formulas[identifiers["Goop"]];
             }
+        }
+
+        public List<string> GetChemNames()
+        {
+            return identifiers.Keys.ToList();
         }
     }
 }
