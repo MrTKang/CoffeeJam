@@ -12,12 +12,14 @@ namespace Assets.Scripts
         public ChemicalTable chemicalTable = ChemicalTable.Instance;
         private GameObject leftChemical = null;
         private GameObject rightChemical = null;
+        private WinampBehaviour winampBehaviour;
 
         public GameObject ProductSlot;
+        public GameObject Winamp;
 
         void Start()
         {
-            
+            winampBehaviour = Winamp.GetComponent<WinampBehaviour>();   
         }
 
         void Update()
@@ -69,6 +71,7 @@ namespace Assets.Scripts
         {
             if (leftChemical != null && rightChemical != null)
             {
+                winampBehaviour.PlayCelebration();
                 var leftName = leftChemical.GetComponent<PotionBehaviour>().Name;
                 var rightName = rightChemical.GetComponent<PotionBehaviour>().Name;
                 Destroy(leftChemical);
