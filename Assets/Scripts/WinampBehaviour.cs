@@ -13,6 +13,7 @@ public class WinampBehaviour : MonoBehaviour
 
     private PlayState currentState = PlayState.Start;
     private float lastLoopPlaybackTime = 0f;
+    public bool IsWebGl;
 
     public enum PlayState
     {
@@ -24,12 +25,22 @@ public class WinampBehaviour : MonoBehaviour
 
     void Start()
     {
+        BackgroundMusic.Play();
+        CelebrationLoop.Play();
     }
 
     // Update is called once per frame
     void Update()
     {
-        var loopPlaybackTime = (CelebrationLoop.time + LOOP_OFFSET) % LOOP_TIME;
+        if (IsWebGl)
+        {
+            loopTimeCollapsed += Time.deltaTime;
+        }
+        else
+        {
+            loopTimeCollapsed = CelebrationLoop.time;
+        }
+        var loopPlaybackTime = (loopTimeCollapsed + LOOP_OFFSET) % LOOP_TIME;
         if (loopPlaybackTime < lastLoopPlaybackTime)
         {
             switch (currentState)

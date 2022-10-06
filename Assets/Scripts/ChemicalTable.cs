@@ -128,11 +128,11 @@ namespace Assets.Scripts
         {
             if (!ingredients.All(i => i.IsIngredient)) throw new Exception($"Not a valid ingredient");
             var productId = GetProduct(ingredients);
-            try
+            if (formulas.ContainsKey(productId))
             {
                 return formulas[productId];
             }
-            catch
+            else
             {
                 return formulas[identifiers["Goop"]];
             }

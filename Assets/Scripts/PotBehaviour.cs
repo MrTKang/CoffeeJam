@@ -12,14 +12,20 @@ namespace Assets.Scripts
         public ChemicalTable chemicalTable = ChemicalTable.Instance;
         private GameObject leftChemical = null;
         private GameObject rightChemical = null;
-        private WinampBehaviour winampBehaviour;
+        private GameObject productChemical = null;
 
         public GameObject ProductSlot;
+
         public GameObject Winamp;
+        private WinampBehaviour winampBehaviour;
+
+        public GameObject AlchemyTable;
+        private AlchemyTableBehaviour alchemyTableBehaviour;
 
         void Start()
         {
-            winampBehaviour = Winamp.GetComponent<WinampBehaviour>();   
+            winampBehaviour = Winamp.GetComponent<WinampBehaviour>();
+            alchemyTableBehaviour = AlchemyTable.GetComponent<AlchemyTableBehaviour>();
         }
 
         void Update()
@@ -42,7 +48,7 @@ namespace Assets.Scripts
                 }
                 else
                 {
-                    leftChemical = Instantiate(productPrefab, slotPosition, Quaternion.identity);
+                    productChemical = Instantiate(productPrefab, slotPosition, Quaternion.identity);
                 }
             }
         }
@@ -62,7 +68,7 @@ namespace Assets.Scripts
                 }
                 else
                 {
-                    leftChemical = Instantiate(productPrefab, slotPosition, Quaternion.identity);
+                    productChemical = Instantiate(productPrefab, slotPosition, Quaternion.identity);
                 }
             }
         }
@@ -78,7 +84,9 @@ namespace Assets.Scripts
                 Destroy(rightChemical);
                 leftChemical = null;
                 rightChemical = null;
-                return chemicalTable.Combine(new Chemical[] { chemicalTable[leftName], chemicalTable[rightName] });
+                var product = chemicalTable.Combine(new Chemical[] { chemicalTable[leftName], chemicalTable[rightName] });
+                alchemyTableBehaviour.RegisterChemical(product);
+                return product;
             }
             return null;
         }

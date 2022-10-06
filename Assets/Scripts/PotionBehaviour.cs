@@ -1,4 +1,5 @@
 using Assets.Scripts;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class PotionBehaviour : MonoBehaviour
     private GameObject pot;
 
     private PotBehaviour potBehaviour;
+    public EventHandler OnSlotted;
     void Start()
     {
         pot = GameObject.Find("Pot");
@@ -41,10 +43,12 @@ public class PotionBehaviour : MonoBehaviour
         if (isOnLeftSlot)
         {
             potBehaviour.FillLeftSlot(this.gameObject);
+            OnSlotted?.Invoke(this, EventArgs.Empty);
         }
         if (isOnRightSlot)
         {
             potBehaviour.FillRightSlot(this.gameObject);
+            OnSlotted?.Invoke(this, EventArgs.Empty);
         }
         Debug.Log("dropped");
     }
@@ -70,6 +74,6 @@ public class PotionBehaviour : MonoBehaviour
     void OnTriggerExit2D(Collider2D col)
     {
         isOnLeftSlot = false;
-        isOnRightSlot = false ;
+        isOnRightSlot = false;
     }
 }

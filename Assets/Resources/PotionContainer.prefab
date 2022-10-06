@@ -51,3 +51,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 
   PotionLabelPrefab: {fileID: 2427614504834230911, guid: df7cd149286624540b4bf3684a80da50, type: 3}
+  RefreshTime: 1
