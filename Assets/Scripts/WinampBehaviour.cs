@@ -34,7 +34,7 @@ public class WinampBehaviour : MonoBehaviour
     {
         if (IsWebGl)
         {
-            loopTimeCollapsed += Time.deltaTime;
+            loopTimeCollapsed = Time.realtimeSinceStartup;
         }
         else
         {

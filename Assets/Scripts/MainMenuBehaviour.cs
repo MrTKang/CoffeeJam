@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuBehaviour : MonoBehaviour
 {
+    public AudioSource MenuBeep;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,11 +15,10 @@ public class MainMenuBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.anyKey)
+        {
+            MenuBeep.Play();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
-    public void OnStartGameButtonClick()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-
 }

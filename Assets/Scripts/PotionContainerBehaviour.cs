@@ -7,20 +7,19 @@ using UnityEngine;
 public class PotionContainerBehaviour : MonoBehaviour
 {
     public string Name;
-    public GameObject PotionLabelPrefab;
-    private GameObject potionLabelPrefab;
     private GameObject productPrefab;
     private GameObject productGameObject;
 
     public float RefreshTime;
     private float refreshTime;
+
+    public bool IsActive;
+
     // Start is called before the first frame update
 
     void Start()
     {
         refreshTime = RefreshTime;
-        potionLabelPrefab = Instantiate(PotionLabelPrefab, gameObject.transform.position, Quaternion.identity, gameObject.transform);
-        potionLabelPrefab.GetComponent<TextMeshPro>().text = Name;
 
         productPrefab = Resources.Load<GameObject>(Name);
         if (productPrefab == null)
@@ -48,6 +47,17 @@ public class PotionContainerBehaviour : MonoBehaviour
     void StockPotion()
     {
         productGameObject = Instantiate(productPrefab, gameObject.transform.position, Quaternion.identity, gameObject.transform);
+
+        if (IsActive)
+        {
+
+            productGameObject.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+        else
+        {
+            productGameObject.GetComponent<Rigidbody2D>().simulated = false;
+            productGameObject.GetComponent<SpriteRenderer>().color = Color.black;
+        }
         var potionBehaviour = productGameObject.GetComponent<PotionBehaviour>();
         potionBehaviour.OnSlotted += OnSlotted;
     }
@@ -55,5 +65,12 @@ public class PotionContainerBehaviour : MonoBehaviour
     void OnSlotted(object sender, EventArgs args)
     {
         productGameObject = null;
+    }
+
+    public void Activate()
+    {
+        IsActive = true;
+        productGameObject.GetComponent<Rigidbody2D>().simulated = true;
+        productGameObject.GetComponent<SpriteRenderer>().color = Color.white;
     }
 }
